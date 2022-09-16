@@ -19,20 +19,12 @@ class CategoryViewSet(ModelViewSet):
     permission_classes = [permissions.IsAdminUser]
 
     filter_backends = (SearchFilter,)
-    search_fields = ('username',)
+    search_fields = ('name',)
 
     pagination_class = StandardResultPagination
 
-    # def get_serializer_class(self):
-    #     if self.action in ('retrieve',):
-    #         return serializers.CategorySerializer
-    #     elif self.action in ('create', 'update', 'partial_update'):
-    #         return serializers.CategoryCreateSerializer
-    #     else:
-    #         return serializers.CategorySerializer
-    #
-    # def get_permissions(self):
-    #     if self.action in ('create', 'update', 'partial_update', 'destroy'):
-    #         return [permissions.IsAuthenticated(), permissions.IsAdminUser()]
-    #     else:
-    #         return [permissions.AllowAny()]
+    def get_permissions(self):
+        if self.action in ('create', 'update', 'partial_update', 'destroy'):
+            return [permissions.IsAuthenticated(), permissions.IsAdminUser()]
+        else:
+            return [permissions.AllowAny()]
